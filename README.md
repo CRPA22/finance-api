@@ -30,7 +30,7 @@ API REST con asistente financiero impulsado por IA. Permite consultar cuentas, t
 
 ```bash
 # Clonar el repositorio
-git clone <url-del-repo>
+git clone https://github.com/CRPA22/finance-api
 cd finance-api
 
 # Instalar dependencias con uv
