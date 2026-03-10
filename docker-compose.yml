@@ -1,0 +1,31 @@
+services:
+  chat-db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${CHAT_DB_USER}
+      POSTGRES_PASSWORD: ${CHAT_DB_PASSWORD}
+      POSTGRES_DB: ${CHAT_DB_NAME}
+    ports:
+      - "5433:5432"
+    volumes:
+      - chat_data:/var/lib/postgresql/data
+
+  api:
+    build: .
+    env_file: .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - logs_data:/app/logs
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_MODEL=${OPENAI_MODEL}
+      - DATABASE_URL=${DATABASE_URL}
+      - CHAT_DATABASE_URL=${CHAT_DATABASE_URL}
+      - LOG_FILE=/app/logs/app.log
+    depends_on:
+      - chat-db
+
+volumes:
+  chat_data:
+  logs_data:
